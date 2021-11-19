@@ -38,9 +38,11 @@ func parseFile(filepath string) error {
 	if err != nil {
 		return err
 	}
-	list := htmlquery.Find(doc, "//td[contains(@class, 'ctext')]")
-	for _, l := range list {
-		fmt.Println(htmlquery.InnerText(l))
+	clist := htmlquery.Find(doc, "//td[contains(@class, 'ctext')]")
+	elist := htmlquery.Find(doc, "//td[contains(@class, 'etext')]")
+	for i := range clist {
+		fmt.Println(htmlquery.InnerText(clist[i]))
+		fmt.Println(htmlquery.InnerText(elist[i]))
 	}
 	return nil
 }
