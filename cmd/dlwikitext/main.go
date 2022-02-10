@@ -6,8 +6,6 @@ import (
 	"github.com/antchfx/htmlquery"
 )
 
-const url = "https://en.wikipedia.org/wiki/List_of_hexagrams_of_the_I_Ching"
-
 const path = "./List_of_hexagrams_of_the_I_Ching.html"
 
 func main() {
@@ -15,5 +13,23 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(doc.FirstChild)
+
+	titles, err := htmlquery.QueryAll(doc, "//h2/span[starts-with(@id, 'Hexagram')]")
+
+	texts, err := htmlquery.QueryAll(doc, "//h2/span[starts-with(@id, 'Hexagram')]/../following-sibling::p[1]")
+
+	tables, err := htmlquery.QueryAll(doc, "//h2/span[starts-with(@id, 'Hexagram')]/../following-sibling::table[1]")
+	if err != nil {
+		panic(err)
+	}
+
+	for i := range titles {
+		if err != nil {
+			panic(err)
+		}
+		title := htmlquery.InnerText(titles[i])
+		text := htmlquery.InnerText(texts[i])
+		table := htmlquery.InnerText(tables[i])
+		fmt.Println(title, text, table)
+	}
 }
