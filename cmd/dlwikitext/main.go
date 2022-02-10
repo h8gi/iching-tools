@@ -1,13 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/antchfx/htmlquery"
 )
 
 const path = "./List_of_hexagrams_of_the_I_Ching.html"
+
+type Gua struct {
+	Id      int64
+	Unicode int64
+	Char    string
+	Text    string
+}
 
 func main() {
 	doc, err := htmlquery.LoadDoc(path)
@@ -24,11 +33,19 @@ func main() {
 		panic(err)
 	}
 
+	gualist := make([]Gua, len(titles), len(titles))
+
 	for i := range titles {
 		if err != nil {
 			panic(err)
 		}
 		title := htmlquery.InnerText(titles[i])
+
+		id, err := strconv.ParseInt(strings.TrimLeft(title, "Hexagram "), 10, 64)
+		if err != nil {
+			panic(err)
+		}
+
 		text := htmlquery.InnerText(texts[i])
 
 		unicode, err := htmlquery.Query(tables[i], "//td/a[@title='Unicode']/../following-sibling::td[1]")
@@ -36,13 +53,28 @@ func main() {
 			panic(err)
 		}
 
-		i, err := strconv.ParseInt(htmlquery.InnerText(unicode), 10, 64)
+		unicodeInt, err := strconv.ParseInt(htmlquery.InnerText(unicode), 10, 64)
 		if err != nil {
 			panic(err)
 		}
 
-		hexarune := string(i)
+		unicodeChar := string(unicodeInt)
 
-		fmt.Println(title, text, hexarune)
+		gua := Gua{
+			Id:      id,
+			Unicode: unicodeInt,
+			Char:    unicodeChar,
+			Text:    text,
+		}
+
+		gualist[i] = gua
 	}
+
+	guajson, err := json.MarshalIndent(gualist, "", "	")
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(string(guajson))
 }
