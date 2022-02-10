@@ -1,0 +1,9 @@
+id,Trigram figure,Possible binary value,Name,Translation: Wilhelm[11],Image in nature (pp.l-li),Direction (p. 269),Family relationship (p. 274),Body part (p. 274),Attribute (p. 273),Stage/ state (pp.l-li),Animal (p. 273)
+1,☰,111,"乾 qián","the Creative, (natural) force","heaven, sky 天",northwest,father,head,"strong, persisting",creative,"馬 horse"
+2,☱,110,"兌 duì","the Joyous, open (reflection)","lake, marsh 澤",west,third daughter,mouth,pleasure,tranquil (complete devotion),"羊 sheep, goat"
+3,☲,101,"離 lí","the Clinging, radiance","fire, glow 火",south,second daughter,eye,"light-giving, humane ""dependence""","clinging, clarity, adaptable","雉 pheasant"
+4,☳,100,"震 zhèn","the Arousing, shake","thunder 雷",east,first son,foot,inciting movement,initiative,"龍 dragon"
+5,☴,011,"巽 xùn","the Gentle, ground","wind, air 風",southeast,first daughter,thigh,penetrating,gentle entrance,"雞 fowl"
+6,☵,010,"坎 kǎn","the Abysmal, gorge","water 水",north,second son,ear,dangerous,in-motion,"豕 pig"
+7,☶,001,"艮 gèn","Keeping Still, bound","mountain 山",northeast,third son,hand,"resting, stand-still",completion,"狗 wolf, dog"
+8,☷,000,"坤 kūn","the Receptive, field","ground, earth 地",southwest,mother (consort),belly,"devoted, yielding",receptive,"牛 cow"
