@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/antchfx/htmlquery"
 )
@@ -29,7 +30,19 @@ func main() {
 		}
 		title := htmlquery.InnerText(titles[i])
 		text := htmlquery.InnerText(texts[i])
-		table := htmlquery.InnerText(tables[i])
-		fmt.Println(title, text, table)
+
+		unicode, err := htmlquery.Query(tables[i], "//td/a[@title='Unicode']/../following-sibling::td[1]")
+		if err != nil {
+			panic(err)
+		}
+
+		i, err := strconv.ParseInt(htmlquery.InnerText(unicode), 10, 64)
+		if err != nil {
+			panic(err)
+		}
+
+		hexarune := string(i)
+
+		fmt.Println(title, text, hexarune)
 	}
 }
