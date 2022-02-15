@@ -11,7 +11,7 @@ import (
 
 const path = "./List_of_hexagrams_of_the_I_Ching.html"
 
-type Gua struct {
+type Hexagram struct {
 	Id      int64
 	Unicode int64
 	Char    string
@@ -33,7 +33,7 @@ func main() {
 		panic(err)
 	}
 
-	gualist := make([]Gua, len(titles), len(titles))
+	gualist := make([]Hexagram, len(titles), len(titles))
 
 	for i := range titles {
 		if err != nil {
@@ -60,7 +60,7 @@ func main() {
 
 		unicodeChar := string(unicodeInt)
 
-		gua := Gua{
+		gua := Hexagram{
 			Id:      id,
 			Unicode: unicodeInt,
 			Char:    unicodeChar,
