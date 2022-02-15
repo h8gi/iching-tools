@@ -2,20 +2,28 @@ package main
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 )
 
 type Trigram struct {
-	Id            int64
-	Unicode       int64
-	Char          string
-	Binary        uint
-	Name          string
-	Translation   string
-	ImageInNature string
-	Direction     string
+	Id                 int
+	Unicode            rune
+	Char               string
+	Binary             uint64
+	BinaryString       string
+	Name               string
+	Translation        string
+	ImageInNature      string
+	Direction          string
+	FamilyRelationship string
+	BodyPart           string
+	Attribute          string
+	Stage              string
+	Animal             string
 }
 
 func main() {
@@ -29,6 +37,10 @@ func main() {
 
 	r := csv.NewReader(f)
 
+	tgs := make([]Trigram, 0, 8)
+
+	r.Read()
+
 	for {
 		record, err := r.Read()
 
@@ -40,14 +52,31 @@ func main() {
 			panic(err)
 		}
 
+		id, _ := strconv.Atoi(record[0])
+		bin, _ := strconv.ParseUint(record[2], 2, 64)
+
 		tg := Trigram{
-			Id:   record[0],
-			Char: record[1],
+			Id:                 id,
+			Unicode:            []rune(record[1])[0],
+			Char:               record[1],
+			Binary:             bin,
+			BinaryString:       record[2],
+			Name:               record[3],
+			Translation:        record[4],
+			ImageInNature:      record[5],
+			Direction:          record[6],
+			FamilyRelationship: record[7],
+			BodyPart:           record[8],
+			Attribute:          record[9],
+			Stage:              record[10],
+			Animal:             record[11],
 		}
 
-		for value := range record {
-			fmt.Printf("%s\n", record[value])
-		}
+		tgs = append(tgs, tg)
 	}
+
+	trijson, _ := json.MarshalIndent(tgs, "", "	")
+
+	fmt.Print(string(trijson))
 
 }
